@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CFAD.Data;
+using CFAD.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CFAD
 {
@@ -27,8 +29,11 @@ namespace CFAD
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             services.AddSingleton<WeatherForecastService>();
+
+            string connection = Configuration.GetConnectionString("ApplicationContext");
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using CFAD.Data;
 using CFAD.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
 
 namespace CFAD
 {
@@ -31,7 +32,8 @@ namespace CFAD
             services.AddRazorPages();
             services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             services.AddSingleton<WeatherForecastService>();
-
+            services.AddTransient<ICompanyService, CompanyService>();
+            services.AddScoped<HttpClient>();
             string connection = Configuration.GetConnectionString("ApplicationContext");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
         }
@@ -58,8 +60,12 @@ namespace CFAD
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
+                endpoints.MapControllerRoute(
+                    name:"default",
+                    pattern: "api/{controller}");
                 endpoints.MapFallbackToPage("/_Host");
             });
+
         }
     }
 }

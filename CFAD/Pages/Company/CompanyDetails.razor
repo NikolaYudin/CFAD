@@ -1,0 +1,33 @@
+﻿@page "/Company/CompanyDetails/{CompanyId}"
+@page "/Company/CompanyDetails"
+@page "/Company"
+@using Data
+@inject ICompanyService companyService;
+
+
+<h3>CompanyDetails</h3>
+
+<div class="col-12 row">
+    <h5 class="col-12 row">@CompanyDetailsS.Name </h5>
+    <h6 class="col-12 row">@CompanyDetailsS.Phone</h6>
+    <h6 class="col-12 row">@CompanyDetailsS.Addres</h6>
+</div>
+
+<hr />
+<div class="col-12 row">@companyService.GetCreatedDate()</div>
+<div class="col-12 row">version: @companyService.GetVersion()</div>
+
+@code {
+    [Parameter]
+    public string CompanyId { get; set; }
+
+    public Company CompanyDetailsS { get; set; }
+    //public CompanyService companyService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //companyService = new CompanyService();
+        CompanyDetailsS = companyService.GetCompanyById(CompanyId);
+    }
+
+}

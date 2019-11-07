@@ -2,42 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CFAD.Models;
-using CFAD.Models.Companys;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CFAD.Contrellers
+namespace CFAD.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController : ControllerBase
+    public class HomeController : ControllerBase
     {
-        private ApplicationContext _context;
-
-        // GET: api/Company
+        // GET: api/Home
         [HttpGet]
-        public List<Company> Get(ApplicationContext context)
+        public IEnumerable<string> Get()
         {
-            _context = context;
-            List<Company> lstCompany = _context.tblCompany.ToList<Company>();
-            return lstCompany;
+            return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Company/5
+        // GET: api/Home/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/Company
+        // POST: api/Home
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: api/Company/5
+        // PUT: api/Home/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {

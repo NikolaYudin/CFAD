@@ -13,7 +13,7 @@ namespace CFAD.Models
         : base(options)
         {
         }
-        public DbSet<Company> tblCompany { get; set; }
+        public DbSet<Company> Companys { get; set; }
     }
 }
 

@@ -12,11 +12,11 @@ namespace CFAD.Data
         public DateTime CreationDate { get; set; }
         public List<Company> CompanyList { get; set; }
 
-        public CompanyService(ApplicationContext context)
+        public CompanyService(MySQLDBContext context)
         {
             CreationDate = DateTime.Now;
 
-            CompanyList = context.Companys.ToList<Company>();
+            CompanyList = context.tb_Company.ToList<Company>();
         }
 
         public List<Company> GetCompanies()

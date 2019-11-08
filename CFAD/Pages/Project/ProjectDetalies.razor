@@ -1,0 +1,36 @@
+﻿@page "/Project/ProjectDetails/{ProjectId}"
+@page "/Project/ProjectDetails"
+@page "/Project"
+@using Data
+@inject IProjectService projectService;
+
+
+<h3>CompanyDetails</h3>
+
+<div class="col-12 row">
+    <h5 class="col-12 row">@ProjectDetailsS.Id </h5>
+    <h6 class="col-12 row">@ProjectDetailsS.Name</h6>
+    <h6 class="col-12 row">@ProjectDetailsS.IdCompany</h6>
+    <h6 class="col-12 row">@ProjectDetailsS.isAction</h6>
+    <h6 class="col-12 row">@ProjectDetailsS.isOnlain</h6>
+    <h6 class="col-12 row">@ProjectDetailsS.isVisibleCostumer</h6>
+</div>
+
+<hr />
+<div class="col-12 row">@projectService.GetCreatedDate()</div>
+<div class="col-12 row">version: @projectService.GetVersion()</div>
+
+@code {
+    [Parameter]
+    public string ProjectId { get; set; }
+
+    public Project ProjectDetailsS { get; set; }
+    //public CompanyService companyService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //companyService = new CompanyService();
+        ProjectDetailsS = projectService.GetProjectById(ProjectId);
+    }
+
+}

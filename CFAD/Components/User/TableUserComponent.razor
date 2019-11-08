@@ -1,0 +1,163 @@
+﻿@using Data
+@inject IUserService userService;
+
+<style>
+    div.blueTable {
+        font-family: "Courier New", Courier, monospace;
+        border: 1px solid #34BA4D;
+        background-color: #EEEEEE;
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    .divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
+        border: 1px solid #AAAAAA;
+        padding: 3px 2px;
+    }
+
+    .divTable.blueTable .divTableBody .divTableCell {
+        font-size: 13px;
+    }
+
+    .divTable.blueTable .divTableRow:nth-child(even) {
+        background: #D5F5D1;
+    }
+
+    .divTable.blueTable .divTableHeading {
+        background: #34BA4D;
+        background: -moz-linear-gradient(top, #67cb79 0%, #48c15e 66%, #34BA4D 100%);
+        background: -webkit-linear-gradient(top, #67cb79 0%, #48c15e 66%, #34BA4D 100%);
+        background: linear-gradient(to bottom, #67cb79 0%, #48c15e 66%, #34BA4D 100%);
+        border-bottom: 2px solid #444444;
+    }
+
+        .divTable.blueTable .divTableHeading .divTableHead {
+            font-size: 15px;
+            font-weight: bold;
+            color: #FFFFFF;
+            border-left: 2px solid #D5F5D1;
+        }
+
+            .divTable.blueTable .divTableHeading .divTableHead:first-child {
+                border-left: none;
+            }
+
+    .blueTable .tableFootStyle {
+        font-size: 14px;
+        font-weight: bold;
+        color: #FFFFFF;
+        background: #D5F5D1;
+        background: -moz-linear-gradient(top, #dff7dc 0%, #d9f6d5 66%, #D5F5D1 100%);
+        background: -webkit-linear-gradient(top, #dff7dc 0%, #d9f6d5 66%, #D5F5D1 100%);
+        background: linear-gradient(to bottom, #dff7dc 0%, #d9f6d5 66%, #D5F5D1 100%);
+        border-top: 2px solid #444444;
+    }
+
+    .blueTable .tableFootStyle {
+        font-size: 14px;
+    }
+
+        .blueTable .tableFootStyle .links {
+            text-align: right;
+        }
+
+            .blueTable .tableFootStyle .links a {
+                display: inline-block;
+                background: #34BA4D;
+                color: #FFFFFF;
+                padding: 2px 8px;
+                border-radius: 5px;
+            }
+
+    .blueTable.outerTableFooter {
+        border-top: none;
+    }
+
+        .blueTable.outerTableFooter .tableFootStyle {
+            padding: 3px 5px;
+        }
+    /* DivTable.com */
+    .divTable {
+        display: table;
+    }
+
+    .divTableRow {
+        display: table-row;
+    }
+
+    .divTableHeading {
+        display: table-header-group;
+    }
+
+    .divTableCell, .divTableHead {
+        display: table-cell;
+    }
+
+    .divTableHeading {
+        display: table-header-group;
+    }
+
+    .divTableFoot {
+        display: table-footer-group;
+    }
+
+    .divTableBody {
+        display: table-row-group;
+    }
+</style>
+
+<h3>TableUserComponent</h3>
+
+<div class="control">
+    <button>Add</button>
+</div>
+<div class="divTable blueTable">
+    <div class="divTableHeading">
+        <div class="divTableRow">
+            <div class="divTableHead">№</div>
+            <div class="divTableHead">Логин</div>
+            <div class="divTableHead">Имя</div>
+            <div class="divTableHead">Роль</div>
+            <div class="divTableHead"></div>
+            <div class="divTableHead"></div>
+        </div>
+    </div>
+    <div class="divTableBody">
+        @foreach (var user in UserList)
+        {
+            <div class="divTableRow">
+                <div class="divTableCell">@user.Id</div>
+                <div class="divTableCell">@user.Login</div>
+                <div class="divTableCell">@user.Name</div>
+                <div class="divTableCell"> @user.Role</div>
+                <div class="divTableCell"><a href="@string.Format("/User/UserDetails/{0}", user.Id)">Изменить</a></div>
+                <div class="divTableCell"><a href="@string.Format("/User/UserDetails/{0}", user.Id)">Удалить</a></div>
+            </div>
+        }
+
+    </div>
+</div>
+<div class="blueTable outerTableFooter">
+    <div class="tableFootStyle">
+        <div class="links">
+            <a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="col-12 row">@userService.GetCreatedDate()</div>
+<div class="col-12 row">version: @userService.GetVersion()</div>
+
+
+@code {
+    public List<User> UserList { get; set; }
+    //public CompanyService companyService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //companyService = new CompanyService();
+        UserList = userService.GetUsers();
+    }
+
+}

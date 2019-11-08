@@ -1,0 +1,34 @@
+﻿@page "/User/UserDetails/{UserId}"
+@page "/User/UserDetails"
+@page "/User"
+@using Data
+@inject IUserService userService;
+
+
+<h3>CompanyDetails</h3>
+
+<div class="col-12 row">
+    <h5 class="col-12 row">@UserDetailsS.Name </h5>
+    <h6 class="col-12 row">@UserDetailsS.Login</h6>
+    <h6 class="col-12 row">@UserDetailsS.Password</h6>
+    <h6 class="col-12 row">@UserDetailsS.Role</h6>
+</div>
+
+<hr />
+<div class="col-12 row">@userService.GetCreatedDate()</div>
+<div class="col-12 row">version: @userService.GetVersion()</div>
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+
+    public User UserDetailsS { get; set; }
+    //public CompanyService companyService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //companyService = new CompanyService();
+        UserDetailsS = userService.GetUserById(UserId);
+    }
+
+}

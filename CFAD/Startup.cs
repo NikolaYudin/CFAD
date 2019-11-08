@@ -34,6 +34,8 @@ namespace CFAD
             services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             services.AddSingleton<WeatherForecastService>();
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProjectService, ProjectService>();
             services.AddScoped<HttpClient>();
 
             string connection = Configuration.GetConnectionString("ApplicationContext");

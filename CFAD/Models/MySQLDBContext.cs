@@ -1,4 +1,5 @@
 ﻿using CFAD.Models.Companys;
+using CFAD.Models.Projects;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,7 @@ namespace CFAD.Models
         {
         }
         public DbSet<Company> tb_Company { get; set; }
+        public DbSet<User> tb_User { get; set; }
+        public DbSet<Project> tb_Project { get; set; }
     }
 }

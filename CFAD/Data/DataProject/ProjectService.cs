@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace CFAD.Data
 {
-    public class ProjectService: IProjectService
-    { 
+    public class ProjectService : IProjectService
+    {
         public DateTime CreationDate { get; set; }
         public List<Project> ProjectList { get; set; }
 
@@ -24,6 +24,14 @@ namespace CFAD.Data
         {
             return ProjectList;
         }
+
+        public List<Project> GetProjectAdd(string CompanyId, string Name)
+        {
+            ProjectList.Add(new Project { Id = Guid.NewGuid().ToString(), IdCompany = CompanyId, Name = Name, isAction = false, isOnlain = false, isVisibleCostumer = false });
+
+            return ProjectList;
+        }
+
         public Project GetProjectById(string ProjectId)
         {
             return ProjectList.Where(us => us.Id.ToString() == ProjectId).FirstOrDefault();

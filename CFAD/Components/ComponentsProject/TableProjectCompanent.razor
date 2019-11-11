@@ -110,8 +110,17 @@
 <h3>TableUserComponent</h3>
 
 <div class="control">
-    <button>Add</button>
+    <button>Добавить проект</button>
 </div>
+
+<div visible="@isVisible">
+    <form>
+        <input />
+        <button>Добавить</button>
+        <button>Отмена</button>
+    </form>
+</div>
+
 <div class="divTable blueTable">
     <div class="divTableHeading">
         <div class="divTableRow">
@@ -128,7 +137,7 @@
         @foreach (var project in ProjectList)
         {
             <div class="divTableRow" id="@project.Id">
-                <div class="divTableCell">@project.Name</div>
+                <div class="divTableCell"><a href="@string.Format("/Question/{0}", project.Id)">@project.Name</a></div>
                 <div class="divTableCell">
                     @if (project.isOnlain == true)
                     {
@@ -183,6 +192,9 @@
 
 @code {
 
+    [Parameter]
+    public string CompanyId { get; set; }
+
     public List<Project> ProjectList { get; set; }
     //public CompanyService companyService { get; set; }
 
@@ -192,4 +204,14 @@
         ProjectList = projectService.GetProjects();
     }
 
+    private void ProjectAdd()
+    {
+        ProjectList = projectService.GetProjectAdd(CompanyId, "Ntcn");
+    }
+
+    private bool isVisible = false;
+    private void Visible()
+    {
+        if (isVisible) isVisible = true; else isVisible = false;
+    }
 }

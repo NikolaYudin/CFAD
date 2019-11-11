@@ -1,0 +1,71 @@
+﻿@using Data
+@inject IQuestionService questionService;
+
+<style>
+div.cinereousTable {
+  border: 6px solid #948473;
+  background-color: #FFE3C6;
+  width: 100%;
+  text-align: center;
+}
+.divTable.cinereousTable .divTableCell, .divTable.cinereousTable .divTableHead {
+  border: 1px solid #948473;
+  padding: 4px 4px;
+}
+.divTable.cinereousTable .divTableBody .divTableCell {
+  font-size: 13px;
+}
+/* DivTable.com */
+.divTable{ display: table; }
+.divTableRow { display: table-row; }
+.divTableHeading { display: table-header-group;}
+.divTableCell, .divTableHead { display: table-cell;}
+.divTableHeading { display: table-header-group;}
+.divTableFoot { display: table-footer-group;}
+.divTableBody { display: table-row-group;}
+</style>
+
+<h3>TableQuestionComponent @GetProjectId</h3>
+
+<div class="control">
+    <button @onclick="AddQuestion">Add</button>
+</div>
+<div class="divTable cinereousTable">
+    <div class="divTableBody">
+        @foreach (var que in QuestionList)
+        {
+            <div class="divTableRow" id="@que.Id">
+                <div class="divTableCell">@que.Id   @que.Name   @que.IdProject</div>
+                <div class="divTableCell">Переименовать</div>
+                <div class="divTableCell">Удалить</div>
+            </div>
+        }
+    </div>
+</div>
+
+<hr />
+<div class="col-12 row">@questionService.GetCreatedDate()</div>
+<div class="col-12 row">version: @questionService.GetVersion()</div>
+
+
+@code {
+
+    [Parameter]
+    public string GetProjectId { get; set; }
+
+     [Parameter]
+    public string GetCompanyId { get; set; }
+
+    public List<CFAD.Models.Projects.Questions.Question> QuestionList { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //companyService = new CompanyService();
+        QuestionList = questionService.GetQuestions();
+    }
+
+    private void AddQuestion()
+    {
+        QuestionList = questionService.GetQuestionAdd(GetProjectId);
+    }
+}

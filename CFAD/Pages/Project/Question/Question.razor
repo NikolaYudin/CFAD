@@ -1,6 +1,10 @@
-﻿@page "/Question{ProjectId}"
+﻿@page "/Question/{ProjectId}"
 <h3>Question</h3>
+
+<TableQuestionCompanent GetProjectId="@ProjectId" GetCompanyId="5554"/>
 
 @code {
 
+    [Parameter]
+    public string ProjectId { get; set; }
 }

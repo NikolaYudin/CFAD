@@ -36,6 +36,7 @@ namespace CFAD
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<IQuestionService, QuestionService>();
             services.AddScoped<HttpClient>();
 
             string connection = Configuration.GetConnectionString("ApplicationContext");

@@ -14,6 +14,8 @@ using CFAD.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace CFAD
 {
@@ -30,6 +32,18 @@ namespace CFAD
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // ******
+            // BLAZOR COOKIE Auth Code (begin)
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
+            // BLAZOR COOKIE Auth Code (end)
+            // ******
             services.AddRazorPages();
             services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             services.AddSingleton<WeatherForecastService>();
@@ -37,6 +51,13 @@ namespace CFAD
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IQuestionService, QuestionService>();
+            // ******
+            // BLAZOR COOKIE Auth Code (begin)
+            // From: https://github.com/aspnet/Blazor/issues/1554
+            // HttpContextAccessor
+            services.AddHttpContextAccessor();
+            services.AddScoped<HttpContextAccessor>();
+            services.AddHttpClient();
             services.AddScoped<HttpClient>();
 
             string connection = Configuration.GetConnectionString("ApplicationContext");
@@ -50,6 +71,9 @@ namespace CFAD
                         mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql); // replace with your Server Version and Type
                     }
             ));
+            // BLAZOR COOKIE Auth Code (end)
+            // ******
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,16 +90,22 @@ namespace CFAD
                 app.UseHsts();
             }
 
+            // ******
+            // BLAZOR COOKIE Auth Code (begin)
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCookiePolicy();
+            app.UseAuthentication();
             app.UseRouting();
+
+            // BLAZOR COOKIE Auth Code (end)
+            // ******
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapControllerRoute(
-                    name:"default",
+                    name: "default",
                     pattern: "api/{controller}");
                 endpoints.MapFallbackToPage("/_Host");
             });

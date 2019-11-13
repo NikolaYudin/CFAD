@@ -12,35 +12,32 @@ namespace CFAD.Controllers
     public class CUserController : ControllerBase
     {
         // GET: api/CUser
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("[action]")]
+        public UserModel GetUser()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/CUser/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/CUser
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/CUser/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            // Instantiate a UserModel
+            var userModel = new UserModel
+            {
+                UserName = "[]",
+                IsAuthenticated = false
+            };
+            // Detect if the user is authenticated
+            if (User.Identity.IsAuthenticated)
+            {
+                // Set the username of the authenticated user
+                userModel.UserName =
+                    User.Identity.Name;
+                userModel.IsAuthenticated =
+                    User.Identity.IsAuthenticated;
+            };
+            return userModel;
         }
     }
+}
+
+// Class to hold the UserModel
+public class UserModel
+{
+    public string UserName { get; set; }
+    public bool IsAuthenticated { get; set; }
 }

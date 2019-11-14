@@ -66,6 +66,6 @@ div.cinereousTable {
 
     private void AddQuestion()
     {
-        QuestionList = questionService.GetQuestionAdd(GetProjectId);
+        QuestionList = questionService.GetQuestionAdd(Guid.Parse(GetProjectId));
     }
 }

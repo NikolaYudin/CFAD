@@ -31,22 +31,13 @@ namespace CFAD
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            // ******
-            // BLAZOR COOKIE Auth Code (begin)
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddAuthentication(
-                CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
-            // BLAZOR COOKIE Auth Code (end)
-            // ******
             services.AddRazorPages();
             services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             services.AddSingleton<WeatherForecastService>();
@@ -54,32 +45,14 @@ namespace CFAD
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IQuestionService, QuestionService>();
-            // ******
-            // BLAZOR COOKIE Auth Code (begin)
-            // From: https://github.com/aspnet/Blazor/issues/1554
-            // HttpContextAccessor
-            services.AddHttpContextAccessor();
-            services.AddScoped<HttpContextAccessor>();
-            services.AddHttpClient();
-            services.AddScoped<HttpClient>();
 
+            //////
+            //////  Подключение к базе дынных
+            //////
             string connection = Configuration.GetConnectionString("ApplicationContext");
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
-
-            string connectionMySQL = Configuration.GetConnectionString("MySQL");
-            services.AddDbContextPool<MySQLDBContext>( // replace "YourDbContext" with the class name of your DbContext
-                options => options.UseMySql(connectionMySQL, // replace with your Connection String
-                    mySqlOptions =>
-                    {
-                        mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql); // replace with your Server Version and Type
-                    }
-            ));
-            // BLAZOR COOKIE Auth Code (end)
-            // ******
-
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -89,21 +62,11 @@ namespace CFAD
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            // ******
-            // BLAZOR COOKIE Auth Code (begin)
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-            app.UseAuthentication();
-            app.UseAuthorization();
             app.UseRouting();
-
-            // BLAZOR COOKIE Auth Code (end)
-            // ******
 
             app.UseEndpoints(endpoints =>
             {

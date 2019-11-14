@@ -7,12 +7,12 @@ namespace CFAD.Models
 {
     public class User
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public int Role { get; set; }
-        public string IdCompany { get; set; }
+        public int IdRole { get; set; }
+        public Guid IdCompany { get; set; }
 
     }
 }

@@ -9,6 +9,6 @@ namespace CFAD.Data
         public List<Company> GetCompanies(); 
         public string GetVersion();
         public DateTime GetCreatedDate();
-        public Company GetCompanyById(string CompanyId);
+        public Company GetCompanyById(Guid CompanyId);
     }
 }

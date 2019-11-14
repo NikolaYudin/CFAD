@@ -7,8 +7,8 @@ namespace CFAD.Models.Projects.Questions
 {
     public class Question
     {
-        public string Id { get; set; }
-        public string IdProject { get; set; }
+        public Guid Id { get; set; }
+        public Guid IdProject { get; set; }
         public string Name { get; set; }
         public int Type { get; set; }
     }

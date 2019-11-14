@@ -27,7 +27,7 @@
     protected override void OnInitialized()
     {
         //companyService = new CompanyService();
-        CompanyDetailsS = companyService.GetCompanyById(CompanyId);
+        CompanyDetailsS = companyService.GetCompanyById(Guid.Parse(CompanyId));
     }
 
 }

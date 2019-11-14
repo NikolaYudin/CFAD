@@ -7,10 +7,10 @@ namespace CFAD.Data
     public interface IProjectService
     {
         public List<Project> GetProjects(); 
-        public List<Project> GetProjectAdd(string CompanyId, string Name); 
+        public List<Project> GetProjectAdd(Guid CompanyId, string Name); 
         public string GetVersion();
         public DateTime GetCreatedDate();
-        public Project GetProjectById(string ProjectId);
+        public Project GetProjectById(Guid ProjectId);
 
         
     }

@@ -11,9 +11,9 @@
     <h5 class="col-12 row">@ProjectDetailsS.Id </h5>
     <h6 class="col-12 row">@ProjectDetailsS.Name</h6>
     <h6 class="col-12 row">@ProjectDetailsS.IdCompany</h6>
-    <h6 class="col-12 row">@ProjectDetailsS.isAction</h6>
-    <h6 class="col-12 row">@ProjectDetailsS.isOnlain</h6>
-    <h6 class="col-12 row">@ProjectDetailsS.isVisibleCostumer</h6>
+    <h6 class="col-12 row">@ProjectDetailsS.Visible</h6>
+    <h6 class="col-12 row">@ProjectDetailsS.IsOnlain</h6>
+    <h6 class="col-12 row">@ProjectDetailsS.VisibleCustomer</h6>
 </div>
 
 <hr />
@@ -30,7 +30,7 @@
     protected override void OnInitialized()
     {
         //companyService = new CompanyService();
-        ProjectDetailsS = projectService.GetProjectById(ProjectId);
+        ProjectDetailsS = projectService.GetProjectById(Guid.Parse(ProjectId));
     }
 
 }

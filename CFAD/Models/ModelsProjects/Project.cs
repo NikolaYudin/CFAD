@@ -7,11 +7,11 @@ namespace CFAD.Models.Projects
 {
     public class Project
     {
-        public string Id { get; set; }
-        public string IdCompany { get; set; }
+        public Guid Id { get; set; }
+        public Guid IdCompany { get; set; }
         public string Name { get; set; }
-        public bool isOnlain { get; set; }
-        public bool isAction { get; set; }
-        public bool isVisibleCostumer { get; set; }
+        public bool IsOnlain { get; set; }
+        public bool Visible { get; set; }
+        public bool VisibleCustomer { get; set; }
     }
 }

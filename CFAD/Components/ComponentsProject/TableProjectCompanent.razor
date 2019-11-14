@@ -139,7 +139,7 @@
             <div class="divTableRow" id="@project.Id">
                 <div class="divTableCell"><a href="@string.Format("/Question/{0}", project.Id)">@project.Name</a></div>
                 <div class="divTableCell">
-                    @if (project.isOnlain == true)
+                    @if (project.IsOnlain == true)
                     {
                         <input type="checkbox" data-toggle="toggle" data-onstyle="success" checked>
                     }
@@ -150,7 +150,7 @@
                     }
                 </div>
                 <div class="divTableCell">
-                    @if (@project.isAction == true)
+                    @if (@project.Visible == true)
                     {
                         <input type="checkbox" data-toggle="toggle" data-onstyle="success" checked>
                     }
@@ -161,7 +161,7 @@
                     }
                 </div>
                 <div class="divTableCell">
-                    @if (@project.isVisibleCostumer == true)
+                    @if (@project.VisibleCustomer == true)
                     {
                         <input type="checkbox" data-toggle="toggle" data-onstyle="success" checked>
                     }
@@ -206,7 +206,7 @@
 
     private void ProjectAdd()
     {
-        ProjectList = projectService.GetProjectAdd(CompanyId, "Ntcn");
+        ProjectList = projectService.GetProjectAdd(Guid.Parse(CompanyId), "Ntcn");
     }
 
     private bool isVisible = false;

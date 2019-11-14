@@ -14,20 +14,20 @@ namespace CFAD.Data
         public DateTime CreationDate { get; set; }
         public List<Question> QuestionList { get; set; }
 
-        public QuestionService(MySQLDBContext context)
+        public QuestionService(ApplicationDbContext context)
         {
             CreationDate = DateTime.Now;
 
-            QuestionList = context.tb_Question.ToList<Question>();
+            QuestionList = context.CFAD_Question.ToList<Question>();
         }
 
         public List<Question> GetQuestions()
         {
             return QuestionList;
         }
-        public Question GetQuestionById(string QuestionId)
+        public Question GetQuestionById(Guid QuestionId)
         {
-            return QuestionList.Where(us => us.Id.ToString() == QuestionId).FirstOrDefault();
+            return QuestionList.Where(us => us.Id == QuestionId).FirstOrDefault();
         }
 
         public DateTime GetCreatedDate()
@@ -40,9 +40,9 @@ namespace CFAD.Data
             return "v1";
         }
 
-        public List<Question> GetQuestionAdd(string ProjectId)
+        public List<Question> GetQuestionAdd(Guid ProjectId)
         {
-            QuestionList.Add(new Question { Id = Guid.NewGuid().ToString(), IdProject = ProjectId, Name = "Test", Type = 0 });
+            QuestionList.Add(new Question { Id = Guid.NewGuid(), IdProject = ProjectId, Name = "Test", Type = 0 });
             return QuestionList;
         }
     }

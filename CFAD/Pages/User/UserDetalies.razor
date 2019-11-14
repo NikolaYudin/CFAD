@@ -11,7 +11,7 @@
     <h5 class="col-12 row">@UserDetailsS.Name </h5>
     <h6 class="col-12 row">@UserDetailsS.Login</h6>
     <h6 class="col-12 row">@UserDetailsS.Password</h6>
-    <h6 class="col-12 row">@UserDetailsS.Role</h6>
+    <h6 class="col-12 row">@UserDetailsS.IdRole</h6>
 </div>
 
 <hr />
@@ -28,7 +28,7 @@
     protected override void OnInitialized()
     {
         //companyService = new CompanyService();
-        UserDetailsS = userService.GetUserById(UserId);
+        UserDetailsS = userService.GetUserById(Guid.Parse(UserId));
     }
 
 }

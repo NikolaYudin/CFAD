@@ -10,7 +10,7 @@ namespace CFAD.Data
         public List<Question> GetQuestions(); 
         public string GetVersion();
         public DateTime GetCreatedDate();
-        public Question GetQuestionById(string QuestionId);
-        public List<Question> GetQuestionAdd(string ProjectId);
+        public Question GetQuestionById(Guid QuestionId);
+        public List<Question> GetQuestionAdd(Guid ProjectId);
     }
 }

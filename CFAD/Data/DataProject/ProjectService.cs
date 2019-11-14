@@ -13,11 +13,11 @@ namespace CFAD.Data
         public DateTime CreationDate { get; set; }
         public List<Project> ProjectList { get; set; }
 
-        public ProjectService(MySQLDBContext context)
+        public ProjectService(ApplicationDbContext context)
         {
             CreationDate = DateTime.Now;
 
-            ProjectList = context.tb_Project.ToList<Project>();
+            ProjectList = context.CFAD_Project.ToList<Project>();
         }
 
         public List<Project> GetProjects()
@@ -25,16 +25,16 @@ namespace CFAD.Data
             return ProjectList;
         }
 
-        public List<Project> GetProjectAdd(string CompanyId, string Name)
+        public List<Project> GetProjectAdd(Guid CompanyId, string Name)
         {
-            ProjectList.Add(new Project { Id = Guid.NewGuid().ToString(), IdCompany = CompanyId, Name = Name, isAction = false, isOnlain = false, isVisibleCostumer = false });
+            ProjectList.Add(new Project { Id = Guid.NewGuid(), IdCompany = CompanyId, Name = Name, Visible = false, IsOnlain = false, VisibleCustomer = false });
 
             return ProjectList;
         }
 
-        public Project GetProjectById(string ProjectId)
+        public Project GetProjectById(Guid ProjectId)
         {
-            return ProjectList.Where(us => us.Id.ToString() == ProjectId).FirstOrDefault();
+            return ProjectList.Where(us => us.Id == ProjectId).FirstOrDefault();
         }
 
         public DateTime GetCreatedDate()

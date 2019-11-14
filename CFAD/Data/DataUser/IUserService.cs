@@ -10,6 +10,6 @@ namespace CFAD.Data
         public List<User> GetUsers(); 
         public string GetVersion();
         public DateTime GetCreatedDate();
-        public User GetUserById(string UserId);
+        public User GetUserById(Guid UserId);
     }
 }
